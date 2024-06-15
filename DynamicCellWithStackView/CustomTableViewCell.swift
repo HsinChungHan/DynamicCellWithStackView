@@ -36,6 +36,12 @@ class CustomTableViewCell: UITableViewCell {
 extension CustomTableViewCell {
     func updateStackView(with cellModel: CellModel) {
         // TODO: - Should implement this method to update the cell content
+        for item in cellModel.items {
+            let label = UILabel()
+            label.text = item.text
+            label.backgroundColor = item.color
+            stackView.addArrangedSubview(label)
+        }
     }
 }
 
