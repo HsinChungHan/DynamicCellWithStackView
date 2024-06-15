@@ -43,6 +43,10 @@ extension CustomTableViewCell {
 private extension CustomTableViewCell {
     func setupLayout() {
         // TODO: - Should do auto layout for cell
+        contentView.addSubview(stackView)
+    }
+}
+
 // MARK: - Factory methods
 private extension CustomTableViewCell {
     func makeStackView() -> UIStackView {
