@@ -20,6 +20,7 @@ protocol CustomTableViewCellDelegate: AnyObject {
 class CustomTableViewCell: UITableViewCell {
     weak var delegate: CustomTableViewCellDelegate?
     
+    lazy var stackView = makeStackView()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
@@ -42,5 +43,11 @@ extension CustomTableViewCell {
 private extension CustomTableViewCell {
     func setupLayout() {
         // TODO: - Should do auto layout for cell
+// MARK: - Factory methods
+private extension CustomTableViewCell {
+    func makeStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
     }
 }
