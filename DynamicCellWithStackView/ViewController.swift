@@ -78,6 +78,18 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CustomTableViewCell.self), for: indexPath) as! CustomTableViewCell
         // TODO: - Update cell's UI with indexPath
+        cell.updateStackView(with: cellModels[indexPath.item])
         return cell
+    }
+}
+
+// MARK: - CustomTableViewCellDelegate
+extension ViewController: CustomTableViewCellDelegate {
+    func customTableViewCell(_ customTableViewCell: CustomTableViewCell, isCellUpdated: Bool) {
+        if !isCellUpdated { return }
+        
+        if let indexPath = tableView.indexPath(for: customTableViewCell) {
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 }

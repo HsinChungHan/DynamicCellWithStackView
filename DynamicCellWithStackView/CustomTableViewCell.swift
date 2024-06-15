@@ -14,13 +14,14 @@ import UIKit
 // You should dynamiclly adjust the cell's heigh by UIStackView's content
 
 protocol CustomTableViewCellDelegate: AnyObject {
-    func customTableViewCell(_ customTableViewCell: CustomTableViewCell, indexPathDidUpdate indexPath: IndexPath)
+    func customTableViewCell(_ customTableViewCell: CustomTableViewCell, isCellUpdated: Bool)
 }
 
 class CustomTableViewCell: UITableViewCell {
     weak var delegate: CustomTableViewCellDelegate?
     
     lazy var stackView = makeStackView()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
@@ -36,12 +37,25 @@ class CustomTableViewCell: UITableViewCell {
 extension CustomTableViewCell {
     func updateStackView(with cellModel: CellModel) {
         // TODO: - Should implement this method to update the cell content
+        // 清空舊的內容
+        stackView.arrangedSubviews.forEach{ $0.removeFromSuperview() }
+        
+        // 添加新的內容並設置高度
         for item in cellModel.items {
             let label = UILabel()
             label.text = item.text
             label.backgroundColor = item.color
             stackView.addArrangedSubview(label)
+            
+            // 設置label的 height constraint
+            label.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                label.heightAnchor.constraint(equalToConstant: item.height)
+            ])
         }
+        
+        // 通知viewController重新reload cell
+        delegate?.customTableViewCell(self, isCellUpdated: true)
     }
 }
 
