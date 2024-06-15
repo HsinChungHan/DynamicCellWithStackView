@@ -50,6 +50,14 @@ private extension CustomTableViewCell {
     func setupLayout() {
         // TODO: - Should do auto layout for cell
         contentView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        let stackViewConstraints = [
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+        ]
+        NSLayoutConstraint.activate(stackViewConstraints)
     }
 }
 
