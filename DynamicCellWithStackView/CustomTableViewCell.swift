@@ -8,14 +8,17 @@
 import Foundation
 import UIKit
 
+// 讓每個 cell 依照內部的 stackView 動態調整其高度
+
+// There is a UIStackView inside the cell
+// You should dynamiclly adjust the cell's heigh by UIStackView's content
+
 protocol CustomTableViewCellDelegate: AnyObject {
     func customTableViewCell(_ customTableViewCell: CustomTableViewCell, indexPathDidUpdate indexPath: IndexPath)
 }
 
 class CustomTableViewCell: UITableViewCell {
     weak var delegate: CustomTableViewCellDelegate?
-    
-    lazy var stackView = makeStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,56 +34,13 @@ class CustomTableViewCell: UITableViewCell {
 // MARK: - APIs
 extension CustomTableViewCell {
     func updateStackView(with cellModel: CellModel) {
-        // 清空舊的內容
-        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        // 添加新的內容並設置高度
-        for item in cellModel.items {
-            let label = UILabel()
-            label.text = item.text
-            label.backgroundColor = item.color
-            stackView.addArrangedSubview(label)
-            
-            // 設置高度約束
-            label.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                label.heightAnchor.constraint(equalToConstant: item.height)
-            ])
-        }
-        
-        // 強制布局更新
-        stackView.layoutIfNeeded()
-        
-        // 通知 tableView 更新高度
-        if let tableView = self.superview as? UITableView {
-            if let indexPath = tableView.indexPath(for: self) {
-                delegate?.customTableViewCell(self, indexPathDidUpdate: indexPath)
-            }
-        }
+        // TODO: - Should implement this method to update the cell content
     }
 }
 
 // MARK: - UILayout
 private extension CustomTableViewCell {
     func setupLayout() {
-        contentView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
-        ])
-    }
-}
-
-// MARK: - Factory Methods
-private extension CustomTableViewCell {
-    func makeStackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.axis = .vertical
-        return stackView
+        // TODO: - Should do auto layout for cell
     }
 }

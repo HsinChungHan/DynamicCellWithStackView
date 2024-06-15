@@ -36,9 +36,8 @@ private extension ViewController {
 private extension ViewController {
     func makeTableView() -> UITableView {
         let tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44.0
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: String(describing: CustomTableViewCell.self))
+        // TODO: - Configure the tableview for dynamically adjusting cell height by inner content
         tableView.dataSource = self
         return tableView
     }
@@ -78,16 +77,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CustomTableViewCell.self), for: indexPath) as! CustomTableViewCell
-        cell.delegate = self
-        cell.updateStackView(with: cellModels[indexPath.row])
+        // TODO: - Update cell's UI with indexPath
         return cell
-    }
-}
-
-// MARK: - CustomTableViewCellDelegate
-extension ViewController: CustomTableViewCellDelegate {
-    // Update cell height
-    func customTableViewCell(_ customTableViewCell: CustomTableViewCell, indexPathDidUpdate indexPath: IndexPath) {
-        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
